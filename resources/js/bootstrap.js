@@ -1,8 +1,15 @@
 import jQuery from 'jquery';
 window.$ = jQuery;
 
+
 import * as  bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
+
+import select2 from 'select2';
+select2();
+
+
+
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

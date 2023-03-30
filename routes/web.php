@@ -24,8 +24,9 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 
-Route::group(['middleware' => ['auth', 'verified']], function() {
+Route::group(['middleware' => ['auth', 'verified', 'prevent-back-history']], function() {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/home/{id}', [HomeController::class, 'show'])->name('home.show');
     Route::resource('/category', CategoryController::class);
     Route::resource('/news', NewsController::class);
 });

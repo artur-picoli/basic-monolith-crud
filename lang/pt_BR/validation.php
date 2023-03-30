@@ -212,5 +212,7 @@ return [
         'updated_at'               => 'atualizado em',
         'username'                 => 'usuário',
         'year'                     => 'ano',
+        'categories'               => 'categorias',
+
     ],
 ];

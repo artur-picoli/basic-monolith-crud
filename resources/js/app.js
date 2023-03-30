@@ -10,6 +10,14 @@ import Swal from 'sweetalert2';
 
 window.Swal = Swal;
 
+$.fn.select2.defaults.set("theme", "bootstrap-5");
+$.fn.select2.defaults.set("width", "100%");
+$.fn.select2.defaults.set("language", {
+    noResults: function (params) {
+    return "Nenhum resultado encontrado!";
+    }
+});
+
 window.deleteConfirm = function (e, title, text) {
     var button = e.target.closest('button');
     var form = button.form;
@@ -63,6 +71,6 @@ window.errorAlert = function (title) {
         icon: 'error',
         title: titulo,
         showConfirmButton: false,
-        timer: 2000
+        timer: 3000
     })
 }
