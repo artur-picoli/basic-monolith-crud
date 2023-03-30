@@ -2,11 +2,11 @@
 
 @section('content')
     <h2 class="text-center">
-        Categorias
+        Gerenciar Categorias
     </h2>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card mt-3">
                     <div class="card-body">
                         <button class="btn btn-primary" type="button" onclick="categoryCreate()">
@@ -41,7 +41,7 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <span title="{{ $category->name }}">{{ Str::limit($category->name,35) }}</span>
                                     <div class="d-flex gap-2">
-                                        <button type="button" class="btn btn-primary"
+                                        <button type="button" title="Editar" class="btn btn-primary"
                                             onclick="categoryEdit('{{ route('category.edit', $category->id) }}')">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -51,7 +51,7 @@
                                         <form method="POST" action="{{ route('category.destroy', [$category->id]) }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" class="btn btn-danger" onclick="deleteConfirm(event)">
+                                            <button type="button" title="Excluir" class="btn btn-danger" onclick="deleteConfirm(event)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                                     <path
@@ -83,6 +83,10 @@
 
         @if (session('deleted'))
             successRemovedAlert();
+        @endif
+
+        @if (session('in_use'))
+            errorAlert('Não é possível remover uma categoria que está em uso!');
         @endif
 
         const modalCreate = new bootstrap.Modal('#modal-create', {});

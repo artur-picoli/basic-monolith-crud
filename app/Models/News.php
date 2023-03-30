@@ -18,8 +18,22 @@ class News extends Model
         'image_path'
     ];
 
+    public function scopeFilter($query, $request)
+    {
+        return $query
+            ->when($request->filter, function ($query, $request) {
+                return $query->where('title', 'like', "%{$request}%");
+            })
+            ->when($request->categories, function ($query, $request) {
+                return $query->whereHas('categories', function ($query) use ($request) {
+                    $query->whereIn('categories.id', $request);
+                });
+            })
+            ->latest();
+    }
+
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'news_category', 'news_id', 'category_id');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -25,7 +26,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        return view('category.create',[
+        return view('category.create', [
             'category' => new Category()
         ]);
     }
@@ -36,6 +37,8 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $validated = $request->validated();
+
+        $validated['name'] = Str::of(($validated['name']))->upper();
 
         Category::create($validated);
 
@@ -49,11 +52,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('category.edit',[
+        return view('category.edit', [
             'category' => $category
         ]);
-
-
     }
 
     /**
@@ -75,6 +76,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if ($category->news()->exists()) {
+            return redirect(route('category.index'))->with('in_use', true);
+        };
+
         $category->delete();
 
         return redirect(route('category.index'))->with('deleted', true);
