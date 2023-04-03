@@ -1,6 +1,6 @@
 <div class="card px-3 pt-3">
     <div class="bg-image hover-overlay shadow-1-strong ripple rounded-5 mb-4" data-mdb-ripple-color="light">
-        <img src="{{ asset($news->image_path) }}" class="img-fluid" width="100%" />
+        <img src="{{ asset($news->image_path) }}" class="img-fluid"/>
         <a href="#!">
             <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
         </a>

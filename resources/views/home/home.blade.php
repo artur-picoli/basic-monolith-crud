@@ -18,7 +18,6 @@
                 <div class="card">
                     <div class="card-body">
                         <x-news-filter :route="route('home')" :filter="$filter" :categories="$categories" :filterCategories="$filterCategories" />
-
                         <div class="px-3 pt-3">
                             @foreach ($news as $new)
                                 <a href="#" class="text-dark" onclick="openNew('{{ route('home.show', $new->id) }}')">
@@ -37,14 +36,6 @@
                                         </div>
                                     </div>
                                 </a>
-                                <!-- News block -->
-                                {{-- <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">{{ $new->title }}</h5>
-                                        <small>{{ \Carbon\Carbon::parse($new->created_at)->format('d/m/Y') }}</small>
-                                    </div>
-                                    <p class="mb-1">{{ $new->body }}</p>
-                                </a> --}}
                             @endforeach
                         </div>
                         <div class="mt-3 justify-content-end">
@@ -56,7 +47,7 @@
         </div>
     </div>
     <div class="modal" tabindex="-1" id="show-news">
-        <div class="modal-dialog  modal-xl">
+        <div class="modal-dialog  modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -68,7 +59,7 @@
     </div>
 @endsection
 @push('js')
-    <script type="module">
+<script type="module">
 
 const showNews = new bootstrap.Modal('#show-news', {});
 

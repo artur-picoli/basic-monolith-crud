@@ -18,6 +18,8 @@ $.fn.select2.defaults.set("language", {
     }
 });
 
+
+
 window.deleteConfirm = function (e, title, text) {
     var button = e.target.closest('button');
     var form = button.form;
@@ -74,3 +76,4 @@ window.errorAlert = function (title) {
         timer: 3000
     })
 }
+

@@ -33,13 +33,10 @@
         </div>
     </form>
 </div>
-
 @push('js')
     <script type="module">
-     $(document).ready(function() {
         $('#categories').select2({
             placeholder: "Filtre pela categoria",
         })
-     })
     </script>
 @endpush
