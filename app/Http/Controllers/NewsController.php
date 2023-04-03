@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\News\NewsIndexAction;
+use App\Actions\News\NewsStoreAction;
+use App\Actions\News\NewsUpdateAction;
 use App\Http\Requests\NewsRequest;
 use App\Models\Category;
 use App\Models\News;
@@ -15,18 +18,7 @@ class NewsController extends Controller
      */
     public function index(Request $request)
     {
-
-        $request->validate([
-            'filter' => 'max:255',
-            'categories' => 'array'
-        ]);
-
-        return view('news.index', [
-            'news' => News::filter($request)->paginate(5),
-            'filter' => $request->filter,
-            'filterCategories' => $request->categories ?? [],
-            'categories' => Category::all()
-        ]);
+        return NewsIndexAction::get($request);
     }
 
     /**
@@ -44,30 +36,9 @@ class NewsController extends Controller
      */
     public function store(NewsRequest $request)
     {
-        $validated = $request->validated();
-
-        $fileName = time() . $validated['file']->getClientOriginalName();
-
-        $request->file->storeAs('public/news', $fileName);
-
-        $news = News::create([
-            'title' => $validated['title'],
-            'body' => $validated['body'],
-            'image_path' => 'storage/news/' . $fileName,
-            'image_name' => $fileName
-        ]);
-
-        $news->categories()->attach($validated['categories']);
+        NewsStoreAction::save($request);
 
         return redirect(route('news.index'))->with('saved', true);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -87,30 +58,7 @@ class NewsController extends Controller
      */
     public function update(NewsRequest $request, News $news)
     {
-        $validated = $request->validated();
-
-        $arrUpdate = [
-            'title' => $validated['title'],
-            'body' => $validated['body'],
-        ];
-
-        $arrFile = [];
-
-        if ($request->hasFile('file')) {
-            $fileName = time() . $validated['file']->getClientOriginalName();
-            $request->file->storeAs('public/news', $fileName);
-            File::delete($news->image_path);
-            $arrFile = [
-                'image_name' => $fileName,
-                'image_path' =>  'storage/news/' . $fileName
-            ];
-            $arrUpdate = array_merge($arrFile, $arrUpdate);
-        };
-
-        $news->update($arrUpdate);
-
-        $news->categories()->sync($validated['categories']);
-
+        NewsUpdateAction::update($request, $news);
 
         return redirect(route('news.index'))->with('updated', true);
     }

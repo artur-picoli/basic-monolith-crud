@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('news_id');
             $table->foreignId('category_id');
-            $table->timestamps();
         });
     }
 

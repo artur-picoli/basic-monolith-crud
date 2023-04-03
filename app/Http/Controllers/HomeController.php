@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Actions\News\NewsIndexAction;
 use App\Models\News;
 use Illuminate\Http\Request;
 
@@ -17,19 +17,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-
-        $request->validate([
-            'filter' => 'max:255',
-            'categories' => 'array'
-        ]);
-
-
-        return view('home.home', [
-            'news' => News::filter($request)->paginate(5),
-            'filter' => $request->filter,
-            'filterCategories' => $request->categories ?? [],
-            'categories' => Category::all()
-        ]);
+        return NewsIndexAction::get($request, 'home.home');
     }
 
     public function show(string $id)
