@@ -19,7 +19,7 @@ class CategoryController extends Controller
         ]);
 
         return view('category.index', [
-            'categories' => Category::getDataIndex($request)->paginate(5),
+            'categories' => Category::filter($request)->paginate(5),
             'filter' => $request->filter,
         ]);
     }
