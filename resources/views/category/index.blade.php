@@ -103,7 +103,7 @@
 
         }
 
-        window.categoryCreate =  function (id) {
+        window.categoryCreate =  function () {
             $('#modal-create .modal-body').load('{{ route('category.create') }}', function(){
                 $('#modal-create .modal-title').html('Cadastro de Catergoria')
                 modalCreate.show()

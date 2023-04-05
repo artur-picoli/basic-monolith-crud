@@ -15,9 +15,9 @@ class Category extends Model
         'name',
     ];
 
-    public static function getDataIndex($request)
+    public static function scopeFilter($query, $request)
     {
-        return static::query()
+        return $query
             ->when($request->filter, function ($query, $request) {
                 return $query->where('name', 'like', "%{$request}%");
             })->latest();
