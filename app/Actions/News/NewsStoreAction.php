@@ -25,6 +25,5 @@ class NewsStoreAction
         ]);
 
         $news->categories()->attach($validated['categories']);
-
     }
 }
